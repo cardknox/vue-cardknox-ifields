@@ -1,0 +1,36 @@
+{
+  "name": "@cardknox/vue-cardknox-ifields",
+  "version": "1.0.0",
+  "description": "A Vue component for Cardknox© iFields>",
+  "main": "dist/vue-cardknox-ifields.umd.js",
+  "module": "dist/vue-cardknox-ifields.esm.js",
+  "unpkg": "dist/vue-cardknox-ifields.min.js",
+  "browser": {
+    "./sfc": "src/ifields/ifields.vue"
+  },
+  "scripts": {
+    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/vue-cardknox-ifields.umd.js",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/vue-cardknox-ifields.esm.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/vue-cardknox-ifields.min.js",
+    "start": "rollup --config rollup.config.js --format es --file dist/vue-cardknox-ifields.esm.js --watch"
+  },
+  "keywords": [
+    "vue",
+    "cardknox",
+    "ifields",
+    "payment",
+    "credit card",
+    "gateway"
+  ],
+  "author": "",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "rollup": "^2.6.1",
+    "rollup-plugin-vue": "^5.1.6",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
