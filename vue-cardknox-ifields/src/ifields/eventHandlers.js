@@ -97,6 +97,9 @@ export function _onUpdate({ data }) {
     if (data.isValid && !this.tokenValid && !this.tokenLoading) {
         this.getToken();
     }
+    if (!data.isValid) {
+        this.tokenValid = false;
+    }
     switch (data.event) {
         case 'input':
             this.$emit('input', { data });
