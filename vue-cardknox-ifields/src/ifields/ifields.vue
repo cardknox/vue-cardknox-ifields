@@ -29,7 +29,8 @@ export default {
       latestErrorTime: null,
       xTokenData: {},
       _tokenValid: false,
-      tokenLoading: false
+      tokenLoading: false,
+      IFIELDS_VERSION: Object.freeze(IFIELDS_VERSION)
     };
   },
   props: {
@@ -150,9 +151,6 @@ export default {
           }
         }
       };
-    },
-    created: function(){
-      this.IFIELDS_VERSION = IFIELDS_VERSION;
     }
   }
 };
