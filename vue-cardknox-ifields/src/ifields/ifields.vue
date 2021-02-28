@@ -1,6 +1,6 @@
 <template>
   <iframe
-    :src="'https://cdn.cardknox.com/ifields/' + version + '/ifield.htm'"
+    :src="'https://cdn.cardknox.com/ifields/' + IFIELDS_VERSION + '/ifield.htm'"
     ref="iFrameRef"
     :title="type"
   />
@@ -14,7 +14,8 @@ import {
   CARD_TYPE,
   CVV_TYPE,
   // WAIT_FOR_3DS_RESPONSE_TIMEOUT_DEFAULT,
-  AUTO_FORMAT_DEFAULT_SEPARATOR
+  AUTO_FORMAT_DEFAULT_SEPARATOR,
+  IFIELDS_VERSION
 } from "./constants";
 import * as eventHandlers from "./eventHandlers";
 import * as actions from "./actions";
@@ -32,7 +33,6 @@ export default {
     };
   },
   props: {
-    version: String,
     type: String,
     account: {
       type: Object,
@@ -150,6 +150,9 @@ export default {
           }
         }
       };
+    },
+    created: function(){
+      this.IFIELDS_VERSION = IFIELDS_VERSION;
     }
   }
 };

@@ -20,7 +20,6 @@
                     </b-field>
                     <b-field label="Card Number">
                         <ifields
-                            version="2.6.2002.1301-beta"
                             :account="account"
                             :type="CARD_TYPE"
                             :options="ifieldCardOptions"
@@ -70,7 +69,6 @@
                     </b-field>
                     <b-field label="CVV">
                         <ifields
-                            version="2.6.2002.1301-beta"
                             :account="account"
                             :type="CVV_TYPE"
                             :issuer="issuer"
