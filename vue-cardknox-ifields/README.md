@@ -18,7 +18,7 @@ A sandbox or live account is required to use this component
 
 ## Usage
 
-There are 3 basic props required to get this up and running.
+There are 2 basic props required to get this up and running.
 
 #### 1. Type
 
@@ -42,16 +42,7 @@ These can be imported from the component
 import { CARD_TYPE, CVV_TYPE, ACH_TYPE } from 'vue-cardknox-ifields';
 ```
 
-#### 2. Version
-
-```
-    template: '<ifields version="2.4.1812.1101" />
-```
-
-Pass the ifields version to the component as the `version` prop. This should include the release type for ex. `2.6.2002.1301-beta`.
-
-
-#### 3. Account
+#### 2. Account
 Pass your [iFields key](https://www.cardknox.com/ifields/) to the component in the **account** prop like this:
 
 ```
@@ -202,12 +193,6 @@ There is also an error event that can be subscribed to.
         <th>Type</th>
         <th>Description</th>
         <th>Valid values</th>
-    </tr>
-    <tr>
-        <td>version</td>
-        <td>String</td>
-        <td>iFields version</td>
-        <td></td>
     </tr>
     <tr>
         <td>type</td>
@@ -421,3 +406,9 @@ There is also an error event that can be subscribed to.
         <td>Either card, cvv, or ach</td>
     </tr>
 </table>
+
+<br/><br/><br/>
+
+---
+
+**iFields Version:** [2.6.2006.0102](https://cdn.cardknox.com/ifields/versions.htm)
