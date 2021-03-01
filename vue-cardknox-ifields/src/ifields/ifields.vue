@@ -14,7 +14,7 @@ import {
   CARD_TYPE,
   CVV_TYPE,
   // WAIT_FOR_3DS_RESPONSE_TIMEOUT_DEFAULT,
-  AUTO_FORMAT_DEFAULT_SEPARATOR,
+  AUTO_FORMAT_DEFAULT_SEPARATOR
 } from "./constants";
 import * as eventHandlers from "./eventHandlers";
 import * as actions from "./actions";
