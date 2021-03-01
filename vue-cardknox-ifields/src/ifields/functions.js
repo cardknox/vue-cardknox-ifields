@@ -52,3 +52,14 @@ export function logAction(action) {
 export function error(message) {
     console.error(`IField ${this.type}: ${message}`);
 }
+
+/**
+ * 
+ * @param {AccountData} account
+ * @returns {AccountData}
+ */
+export function transformAccountData(account) {
+  const xSoftwareName = account.xSoftwareName;
+  console.log('hit')
+  return Object.assign({}, account, { xSoftwareName: `(${PLUGIN_NAME}) ${xSoftwareName}` });
+}

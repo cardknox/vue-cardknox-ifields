@@ -15,7 +15,6 @@ import {
   CVV_TYPE,
   // WAIT_FOR_3DS_RESPONSE_TIMEOUT_DEFAULT,
   AUTO_FORMAT_DEFAULT_SEPARATOR,
-  PLUGIN_NAME
 } from "./constants";
 import * as eventHandlers from "./eventHandlers";
 import * as actions from "./actions";
@@ -98,8 +97,9 @@ export default {
     window.removeEventListener("message", this.onMessage);
   },
   watch: {
-    account: function(val) {
-      this.setAccount(val);
+    account: function (val) {
+      const newAccount = this.transformAccountData(val);
+      this.setAccount(newAccount);
     },
     threeDS: function(val, oldVal) {
       if (this.type !== CARD_TYPE) return;
@@ -147,9 +147,6 @@ export default {
       set(value) {
         this._tokenValid = value;
       }
-    },
-    getSoftwareName () {
-      return `(${PLUGIN_NAME}) ${this.account.xSoftwareName}`;
     }
   }
 };
