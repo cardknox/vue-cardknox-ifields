@@ -14,7 +14,8 @@ import {
   CARD_TYPE,
   CVV_TYPE,
   // WAIT_FOR_3DS_RESPONSE_TIMEOUT_DEFAULT,
-  AUTO_FORMAT_DEFAULT_SEPARATOR
+  AUTO_FORMAT_DEFAULT_SEPARATOR,
+  PLUGIN_NAME
 } from "./constants";
 import * as eventHandlers from "./eventHandlers";
 import * as actions from "./actions";
@@ -146,6 +147,9 @@ export default {
       set(value) {
         this._tokenValid = value;
       }
+    },
+    getSoftwareName () {
+      return `(${PLUGIN_NAME}) ${this.account.xSoftwareName}`;
     }
   }
 };
