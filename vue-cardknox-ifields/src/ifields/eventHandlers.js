@@ -45,7 +45,7 @@ export function _onMessage(e) {
 }
 export function _onLoad() {
     this.iFrameLoaded = true;
-    const newAccount = this.transformAccountData(val);
+    const newAccount = this.transformAccountData(this.account);
     this.setAccount(newAccount);
     if (this.type === CARD_TYPE && this.threeDS.enable3DS) {
         this.enable3DS(this.threeDS.waitForResponse, this.threeDS.waitForResponseTimeout);

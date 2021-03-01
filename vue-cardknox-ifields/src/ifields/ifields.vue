@@ -87,7 +87,8 @@ export default {
     validateProps: functions.validateProps,
     log: functions.log,
     logAction: functions.logAction,
-    error: functions.error
+    error: functions.error,
+    transformAccountData: functions.transformAccountData
   },
   mounted: function() {
     window.addEventListener("message", this.onMessage);

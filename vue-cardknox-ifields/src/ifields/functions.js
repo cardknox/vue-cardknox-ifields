@@ -1,4 +1,4 @@
-import { PING } from './constants';
+import { PING, PLUGIN_NAME } from './constants';
 
 /**
  *
