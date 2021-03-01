@@ -60,6 +60,5 @@ export function error(message) {
  */
 export function transformAccountData(account) {
   const xSoftwareName = account.xSoftwareName;
-  console.log('hit')
   return Object.assign({}, account, { xSoftwareName: `(${PLUGIN_NAME}) ${xSoftwareName}` });
 }
