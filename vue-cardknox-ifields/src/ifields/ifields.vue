@@ -137,20 +137,16 @@ export default {
         this.setPlaceholder(val.placeholder);
       if (val.iFieldstyle !== oldVal.iFieldstyle)
         this.setStyle(val.iFieldstyle);
-    },
-    computed: function() {
-      return {
-        tokenValid: {
-          get() {
-            return (
-              this._tokenValid && this.xTokenData && this.xTokenData.xToken
-            );
-          },
-          set(value) {
-            this._tokenValid = value;
-          }
-        }
-      };
+    }
+  },
+  computed: {
+    tokenValid: {
+      get() {
+        return this._tokenValid && this.xTokenData && this.xTokenData.xToken;
+      },
+      set(value) {
+        this._tokenValid = value;
+      }
     }
   }
 };
