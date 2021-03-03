@@ -88,7 +88,8 @@ export default {
     validateProps: functions.validateProps,
     log: functions.log,
     logAction: functions.logAction,
-    error: functions.error
+    error: functions.error,
+    transformAccountData: functions.transformAccountData
   },
   mounted: function() {
     window.addEventListener("message", this.onMessage);
@@ -98,8 +99,9 @@ export default {
     window.removeEventListener("message", this.onMessage);
   },
   watch: {
-    account: function(val) {
-      this.setAccount(val);
+    account: function (val) {
+      const newAccount = this.transformAccountData(val);
+      this.setAccount(newAccount);
     },
     threeDS: function(val, oldVal) {
       if (this.type !== CARD_TYPE) return;
