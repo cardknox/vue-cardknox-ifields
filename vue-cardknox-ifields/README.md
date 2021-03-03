@@ -28,7 +28,7 @@ There are three types of payment data iFields supports:
 * ACH
 
 ```
-    template: '<ifields type="card" />
+    template: '<ifields :type="card" />
 ```
 
 The possible values for this property are 
