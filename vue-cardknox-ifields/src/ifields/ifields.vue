@@ -143,6 +143,7 @@ export default {
   },
   computed: {
     tokenValid: {
+      cache: false,
       get() {
         return this._tokenValid && this.xTokenData && this.xTokenData.xToken;
       },
