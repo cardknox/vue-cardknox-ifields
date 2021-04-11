@@ -185,6 +185,50 @@ There is also an error event that can be subscribed to.
 
 ---
 
+## Actions
+
+There are 3 actions available on this component as well
+
+### Focus
+
+`focusIfield`
+
+This action will set the focus to the ifield when called
+
+### Clear
+
+`clearIfield`
+
+This action will clear the data from the ifield when called
+
+### Get Token
+
+`getToken`
+
+This action will load the token for the ifield when called.
+
+```
+  
+Vue.component('app', {
+    methods: function () {
+        return {
+            focus(){
+                this.$refs.ifieldRef.focusIfield();
+            },
+            clear(){
+                this.$refs.ifieldRef.clearIfield();
+            }
+            getToken(){
+                this.$refs.ifieldRef.getToken();
+            }
+        };
+    },
+    template: `<ifields ref="ifieldRef" />
+});
+```
+
+
+
 ## Props
 
 <table>

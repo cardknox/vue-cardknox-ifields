@@ -24,6 +24,7 @@
                             :type="CARD_TYPE"
                             :options="ifieldCardOptions"
                             :threeDS="threeDS"
+                            ref="cardIfield"
                             @load="onLoad"
                             @submit="onSubmit"
                             @token="onCardToken"
@@ -37,6 +38,9 @@
                             @blur="onUpdate"
                         />
                     </b-field>
+                        <button @click="focus(CARD_TYPE)">Focus</button>
+                        <button @click="clear(CARD_TYPE)">Clear</button>
+                        <button @click="submit(CARD_TYPE)">Submit</button>
                     <b-field label="Expiration">
                         <div>
                             <b-dropdown v-model="cardData.month" hoverable aria-role="list">
@@ -73,6 +77,7 @@
                             :type="CVV_TYPE"
                             :issuer="issuer"
                             :options="ifieldCvvOptions"
+                            ref="cvvIfield"
                             @load="onLoad"
                             @submit="onSubmit"
                             @token="onCvvToken"
@@ -86,6 +91,9 @@
                             @blur="onUpdate"
                         />
                     </b-field>
+                        <button @click="focus(CVV_TYPE)">Focus</button>
+                        <button @click="clear(CVV_TYPE)">Clear</button>
+                        <button @click="submit(CVV_TYPE)">Submit</button>
                     <submit :amount="amount" :doSubmit="doSubmit" :cardData="cardData" :valid="ready" />
                 </section>
             </div>
@@ -215,6 +223,28 @@ export default {
         },
         onError({ data }) {
             console.error("IFrame errored", data);
+        },
+        focus(type){
+            const ref = this.getRefFromType(type);
+            ref.focusIfield();
+        },
+        clear(type){
+            const ref = this.getRefFromType(type);
+            ref.clearIfield();
+        },
+        submit(type){
+            const ref = this.getRefFromType(type);
+            ref.getToken();
+        },
+        getRefFromType(type){
+            switch (type) {
+                case CARD_TYPE:
+                    return this.$refs.cardIfield;
+                case CVV_TYPE:
+                    return this.$refs.cvvIfield;
+                default:
+                    throw 'unknown type';
+            }
         }
     }
 };
