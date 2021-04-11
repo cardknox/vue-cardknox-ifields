@@ -164,7 +164,7 @@ Vue.component('app', {
 It is also possible to have the component automatically submit the form for you when _submit_ is triggered from the iFrame.If `autoSubmitFormId` is set on the options prop the component will call submit on the element with that ID. This is useful for smaller applications relying on the form element to handle submission.
 
 ```
-VVue.component('app', {
+Vue.component('app', {
     data: function () {
         return {
             options: {
