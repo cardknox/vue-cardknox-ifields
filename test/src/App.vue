@@ -202,7 +202,6 @@ export default {
             console.log("Iframe loaded");
         },
         onUpdate({ data }) {
-            // console.log(`Iframe ${data.event} received`);
             if (data.issuer) this.issuer = data.issuer;
         },
         onSubmit() {
@@ -243,7 +242,7 @@ export default {
                 case CVV_TYPE:
                     return this.$refs.cvvIfield;
                 default:
-                    throw 'unknown type';
+                    throw Error('unknown type');
             }
         }
     }
