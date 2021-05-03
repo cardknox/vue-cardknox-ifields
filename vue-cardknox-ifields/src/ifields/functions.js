@@ -1,4 +1,4 @@
-import { PING, PLUGIN_NAME } from './constants';
+import { IFIELD_ORIGIN, PING, PLUGIN_NAME } from './constants';
 
 /**
  *
@@ -10,8 +10,18 @@ export function postMessage(data) {
         this.ping();
         return;
     }
-    // NOSONAR
-    this.$refs.iFrameRef.contentWindow.postMessage(data, "*");
+    const target = isAccessible(this.$refs.iFrameRef.contentWindow) ? location.origin : IFIELD_ORIGIN;
+    this.$refs.iFrameRef.contentWindow.postMessage(data, target);
+}
+
+function isAccessible(otherWindow) {
+    try {
+        if (!otherWindow.document)
+            return false;
+        return true;
+    } catch(e) {
+        return false;
+    }
 }
 export function validateProps() {
     // var props = this.props;
@@ -60,6 +70,6 @@ export function error(message) {
  * @returns {AccountData}
  */
 export function transformAccountData(account) {
-  const xSoftwareName = account.xSoftwareName;
-  return Object.assign({}, account, { xSoftwareName: `(${PLUGIN_NAME}) ${xSoftwareName}` });
+    const xSoftwareName = account.xSoftwareName;
+    return Object.assign({}, account, { xSoftwareName: `(${PLUGIN_NAME}) ${xSoftwareName}` });
 }
