@@ -28,3 +28,4 @@ export const WAIT_FOR_3DS_RESPONSE_TIMEOUT_DEFAULT = 2E4;
 export const AUTO_FORMAT_DEFAULT_SEPARATOR = " ";
 export const IFIELDS_VERSION = '2.6.2006.0102';
 export const PLUGIN_NAME = "vue-cardknox-ifields";
+export const IFIELD_ORIGIN = "https://cdn.cardknox.com";
