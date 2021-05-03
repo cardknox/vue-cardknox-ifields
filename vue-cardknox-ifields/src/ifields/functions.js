@@ -10,6 +10,7 @@ export function postMessage(data) {
         this.ping();
         return;
     }
+    // NOSONAR
     this.$refs.iFrameRef.contentWindow.postMessage(data, "*");
 }
 export function validateProps() {
