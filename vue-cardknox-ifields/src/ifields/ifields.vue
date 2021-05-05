@@ -90,10 +90,10 @@ export default {
     validateProps: functions.validateProps,
     log: functions.log,
     logAction: functions.logAction,
-    error: functions.error,
     transformAccountData: functions.transformAccountData
   },
   mounted: function() {
+    this.validateProps();
     window.addEventListener("message", this.onMessage);
     this.ping();
   },

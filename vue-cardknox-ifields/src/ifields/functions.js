@@ -19,25 +19,21 @@ function isAccessible(otherWindow) {
         if (!otherWindow.document)
             return false;
         return true;
-    } catch(e) {
+    } catch (e) {
         return false;
     }
 }
 export function validateProps() {
-    // var props = this.props;
-    var accountProps = this.account
-        ? this.account.xKey
-            ? this.account.xSoftwareName
-                ? this.account.xSoftwareVersion
-                    ? false
-                    : "xSoftwareVersion"
-                : "xSoftwareName"
-            : "xKey"
-        : "account";
-    if (accountProps) {
-        this.error("Missing " + accountProps);
-    }
-    if (!this.type) this.error("Missing props (type)");
+    validateIsDefined(this.account, "account");
+    validateIsDefined(this.account.xKey, "xKey");
+    validateIsDefined(this.account.xSoftwareName, "xSoftwareName");
+    validateIsDefined(this.account.xSoftwareVersion, "xSoftwareVersion");
+    validateIsDefined(this.type, "type");
+}
+
+function validateIsDefined(value, name) {
+    if (!value)
+        throw new Error("Missing " + name);
 }
 
 /**
@@ -55,13 +51,6 @@ export function log(message) {
  */
 export function logAction(action) {
     this.log(`Sending message ${action}`);
-}
-/**
- *
- * @param {string} message
- */
-export function error(message) {
-    console.error(`IField ${this.type}: ${message}`);
 }
 
 /**
