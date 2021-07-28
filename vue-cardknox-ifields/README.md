@@ -99,11 +99,12 @@ The available events are
 1. blur
 1. input
 1. change
+1. keypress
 1. submit*
 
 \* the submit event works slightly differently, see below.
 
-#### Update
+#### Update Event
 
 Aside from submit, the above events can be collected on a single event `update`. This is **not** recommended as it will cause an unnecessary amount of function calls. Instead subscribe only to the events you want to act on.
 
@@ -127,7 +128,7 @@ Vue.component('app', {
 });
 ```
 
-#### Submit
+#### Submit Event
 
 This event is triggered when the user submits the form from within the iFrame.
 
@@ -395,34 +396,39 @@ Vue.component('app', {
         <th>Description</th>
     </tr>
     <tr>
-        <td>enable3DS</td>
+        <td>cardNumberlength</td>
+        <td>Number</td>
+        <td>The length of the data in the card iField <br/> Only returned on an update event from the card iField</td>
+    </tr>
+    <tr>
+        <td>event</td>
+        <td>String</td>
+        <td>The name of the event</td>
+    </tr>
+    <tr>
+        <td>ifieldValueChanged</td>
         <td>Boolean</td>
-        <td>Turn 3DSecure on and off</td>
+        <td>Whether or not the value in this iField has changed</td>
     </tr>
     <tr>
-        <td>waitForResponse</td>
+        <td>isEmpty</td>
         <td>Boolean</td>
-        <td>Determine whether iFields should wait for a response from 3DSecure before getting the token</td>
+        <td>Whether or not the iField is empty</td>
     </tr>
     <tr>
-        <td>waitForResponseTimeout</td>
-        <td>Number</td>
-        <td>The 3DSecure response timeout in milli-seconds. The default value is 2000 (2 seconds).</td>
+        <td>isValid</td>
+        <td>Boolean</td>
+        <td>Whether or not the data in the iField is valid</td>
     </tr>
     <tr>
-        <td>amount</td>
-        <td>Number</td>
-        <td>The transaction amount</td>
+        <td>issuer</td>
+        <td>String</td>
+        <td>The card issuer <br/> Only returned on an update event from the card iField</td>
     </tr>
     <tr>
-        <td>month</td>
-        <td>Number</td>
-        <td>The 2-digit card expiration month</td>
-    </tr>
-    <tr>
-        <td>year</td>
-        <td>Number</td>
-        <td>The 2-digit card expiration year</td>
+        <td>length</td>
+        <td>Boolean</td>
+        <td>The length of the data in the iField <br/><emp>Note:</emp> For card iFields, this includes the formating character. Use <code>cardNumberlength</code> to get the actual data length.</td>
     </tr>
 </table>
 

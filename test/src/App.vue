@@ -170,7 +170,7 @@ export default {
                 year: new Date().getFullYear(),
                 cardToken: "",
                 cvvToken: "",
-                name
+                name: this.name
             },
             doSubmit: false
         };
