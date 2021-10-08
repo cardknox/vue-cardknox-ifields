@@ -63,7 +63,7 @@ export function _onLoad() {
     if (this.type === CARD_TYPE && this.options.autoFormat)
         this.enableAutoFormat(this.options.autoFormatSeparator);
     if (this.options.autoSubmit)
-        this.enableAutoSubmit(this.options.autoSubmitFormId);
+        this.enableAutoSubmit(this.options.autoSubmitFormId || "");
     if (this.options.iFieldstyle)
         this.setStyle(this.options.iFieldstyle);
     this.$emit('load');
@@ -77,11 +77,9 @@ export function _onToken({ data }) {
     if (data.result === ERROR) {
         this.latestErrorTime = new Date();
         this.log("Token Error: " + data.errorMessage);
-        this.tokenValid = false;
         this.$emit('error', { data });
     } else {
         this.xTokenData = data;
-        this.tokenValid = true;
         this.$emit('token', { data });
     }
 }
@@ -90,17 +88,16 @@ export function _onToken({ data }) {
  * @param {{data: UpdateData}} param0
  */
 export function _onUpdate({ data }) {
-    this.ifieldDataCache = {
-        length: this.type === CARD_TYPE ? data.cardNumberLength : data.length,
-        isEmpty: data.isEmpty,
-        isValid: data.isValid
-    };
-    if (data.isValid && !this.tokenValid && !this.tokenLoading) {
+    const shouldGetToken = data.isValid
+        && data.length !== this.ifieldDataCache.length
+        && !this.tokenLoading
+        && this.options.autoSubmit;
+    if (shouldGetToken) {
         this.getToken();
     }
-    if (!data.isValid) {
-        this.tokenValid = false;
-    }
+    this.ifieldDataCache = {
+        length: data.length
+    };
     switch (data.event) {
         case 'input':
             this.$emit('input', { data });
