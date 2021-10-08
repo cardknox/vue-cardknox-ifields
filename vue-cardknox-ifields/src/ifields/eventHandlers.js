@@ -63,7 +63,7 @@ export function _onLoad() {
     if (this.type === CARD_TYPE && this.options.autoFormat)
         this.enableAutoFormat(this.options.autoFormatSeparator);
     if (this.options.autoSubmit)
-        this.enableAutoSubmit(this.options.autoSubmitFormId);
+        this.enableAutoSubmit(this.options.autoSubmitFormId || "");
     if (this.options.iFieldstyle)
         this.setStyle(this.options.iFieldstyle);
     this.$emit('load');
@@ -95,7 +95,8 @@ export function _onUpdate({ data }) {
         isEmpty: data.isEmpty,
         isValid: data.isValid
     };
-    if (data.isValid && !this.tokenValid && !this.tokenLoading) {
+    const shouldGetToken = data.isValid && !this.tokenValid && !this.tokenLoading && this.options.autoSubmit
+    if (shouldGetToken) {
         this.getToken();
     }
     if (!data.isValid) {
