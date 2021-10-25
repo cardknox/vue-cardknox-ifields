@@ -96,6 +96,14 @@
                         <button @click="submit(CVV_TYPE)">Submit</button>
                     <submit :amount="amount" :doSubmit="doSubmit" :cardData="cardData" :valid="ready" />
                 </section>
+                <section class="box result-box">
+                    <b-field label="Card Token">
+                        <p class="token-field" id="card-token">{{this.cardData.cardToken}}</p>
+                    </b-field>
+                    <b-field label="CVV Token">
+                        <p class="token-field" id="cvv-token">{{this.cardData.cvvToken}}</p>
+                    </b-field>
+                </section>
             </div>
         </div>
     </div>
@@ -230,6 +238,7 @@ export default {
         clear(type){
             const ref = this.getRefFromType(type);
             ref.clearIfield();
+            this.cardData[type + "Token"] = "";
         },
         submit(type){
             const ref = this.getRefFromType(type);
@@ -259,7 +268,7 @@ html {
     -moz-osx-font-smoothing: grayscale;
 }
 .main {
-    width: 35%;
+    width: 65%;
     margin: 5% 10%;
 }
 iframe {
@@ -271,10 +280,20 @@ iframe {
     max-width: 450px;
     min-width: 406px;
     width: 425px;
+    float: left;
+}
+.result-box{
+    max-width: 450px;
+    min-width: 406px;
+    width: 425px;
+    float: right;
 }
 #total {
     color: #00103a;
     font-size: 32px;
     font-weight: bold;
+}
+.token-field{
+    word-wrap: break-word;
 }
 </style>
