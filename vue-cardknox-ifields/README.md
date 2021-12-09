@@ -328,7 +328,7 @@ Vue.component('app', {
     <tr>
         <td>autoSubmit</td>
         <td>Boolean</td>
-        <td>Turn on capturing a submit event triggered from within the iFrame. Default is <code>true</code>.</td>
+        <td>The token should be retrieved as soon as the data is valid. This setting will also turn on capturing a submit event triggered from within the iFrame when submitting the data. Default is <code>true</code>.</td>
     </tr>
     <tr>
         <td>autoSubmitFormId</td>
