@@ -1,9 +1,5 @@
 <template>
-  <iframe
-    :src="IFIELD_ORIGIN + '/ifields/' + IFIELDS_VERSION + '/ifield.htm'"
-    ref="iFrameRef"
-    :title="type"
-  />
+  <iframe :src="IFIELD_ORIGIN + '/ifields/' + IFIELDS_VERSION + '/ifield.htm'" ref="iFrameRef" :title="type" />
 </template>
 
 <script>
@@ -23,7 +19,7 @@ import * as actions from "./actions";
 import * as functions from "./functions";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       iFrameLoaded: false,
       ifieldDataCache: {},
@@ -39,13 +35,13 @@ export default {
     type: String,
     account: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
       }
     },
     options: {
       type: Object,
-      default: function() {
+      default: function () {
         return {
           autoFormatSeparator: AUTO_FORMAT_DEFAULT_SEPARATOR,
           autoSubmit: true
@@ -54,7 +50,7 @@ export default {
     },
     threeDS: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
       }
     },
@@ -74,7 +70,8 @@ export default {
     init: actions.init,
     getToken: actions.getToken,
     enable3DS: actions.enable3DS,
-    update3DS: actions.update3DS,
+    disable3DS: actions.disable3DS,
+    verify3DS: actions.verify3DS,
     updateIssuer: actions.updateIssuer,
     setPlaceholder: actions.setPlaceholder,
     enableAutoFormat: actions.enableAutoFormat,
@@ -92,12 +89,12 @@ export default {
     logAction: functions.logAction,
     transformAccountData: functions.transformAccountData
   },
-  mounted: function() {
+  mounted: function () {
     this.validateProps();
     window.addEventListener("message", this.onMessage);
     this.ping();
   },
-  destroyed: function() {
+  destroyed: function () {
     window.removeEventListener("message", this.onMessage);
   },
   watch: {
@@ -105,23 +102,22 @@ export default {
       const newAccount = this.transformAccountData(val);
       this.setAccount(newAccount);
     },
-    threeDS: function(val, oldVal) {
+    threeDS: function (val, oldVal) {
       if (this.type !== CARD_TYPE) return;
       if (val.enable3DS) {
-        if (!oldVal.enable3DS)
-          this.enable3DS(val.waitForResponse, val.waitForResponseTimeout);
-        if (val.amount !== oldVal.amount || !oldVal.enable3DS)
-          this.update3DS(AMOUNT, val.amount);
-        if (val.month !== oldVal.month || !oldVal.enable3DS)
-          this.update3DS(MONTH, val.month);
-        if (val.year !== oldVal.year || !oldVal.enable3DS)
-          this.update3DS(YEAR, val.year);
+        if (!val.environment)
+          return;
+        if (!oldVal.enable3DS || val.environment !== oldVal.environment || val.handle3DSResults !== oldVal.handle3DSResults)
+          this.enable3DS(val.environment, val.handle3DSResults);
+      }
+      else if (oldVal.enable3DS) {
+        this.disable3DS();
       }
     },
-    issuer: function(val) {
+    issuer: function (val) {
       if (this.type === CVV_TYPE) this.updateIssuer(val);
     },
-    options: function(val, oldVal) {
+    options: function (val, oldVal) {
       if (this.type === CARD_TYPE && val.autoFormat) {
         if (
           val.autoFormat !== oldVal.autoFormat ||

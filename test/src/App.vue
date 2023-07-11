@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import ifields, { CARD_TYPE, CVV_TYPE } from "vue-cardknox-ifields";
+import ifields, { CARD_TYPE, CVV_TYPE, THREEDS_ENVIRONMENT } from "vue-cardknox-ifields";
 import submit from "./components/submit";
 import "buefy/dist/buefy.css";
 
@@ -131,6 +131,7 @@ export default {
                 enableLogging: false,
                 autoFormat: true,
                 autoFormatSeparator: " ",
+                threeDS: this.threeDS,
                 placeholder: "Card Number",
                 iFieldstyle: {
                     width: "365px",
@@ -193,12 +194,9 @@ export default {
         },
         threeDS() {
             return {
-                enable3DS: false,
-                waitForResponse: false,
-                waitForResponseTimeout: undefined,
-                amount: this.amount,
-                month: this.cardData.month,
-                year: this.cardData.year
+                enable3DS: true,
+                environment: THREEDS_ENVIRONMENT.Staging,
+                handle3DSResults: this.handle3DSResults
             };
         },
         ready() {
@@ -221,6 +219,7 @@ export default {
             this.cardData = Object.assign({}, this.cardData, {
                 cardToken: data.xToken
             });
+            this.ifields.verify3DS({});
         },
         onCvvToken({ data }) {
             console.log("IFrame cvv token received");
@@ -253,6 +252,9 @@ export default {
                 default:
                     throw Error('unknown type');
             }
+        },
+        handle3DSResults() {
+            
         }
     }
 };

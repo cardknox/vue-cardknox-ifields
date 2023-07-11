@@ -11,6 +11,7 @@ import {
   ENABLE_LOGGING,
   ENABLE_AUTO_SUBMIT,
   ENABLE3DS,
+  DISABLE3DS,
   UPDATE3DS,
   UPDATE_ISSUER
 } from "./constants";
@@ -53,19 +54,46 @@ export function getToken() {
 }
 /**
  *
- * @param {boolean} waitForResponse
- * @param {number} waitForResponseTimeout
+ * @param {string} environment
  */
-export function enable3DS(waitForResponse, waitForResponseTimeout) {
+export function enable3DS(environment, handle3DSResults) {
+  if (!!handle3DSResults) {
+    if (typeof window.ck3DS !== 'undefined') {
+      ck3DS.configuration.onVerifyComplete = handle3DSResults;
+      ck3DS.configuration.enableConsoleLogging = this.options.enableLogging;
+      if (!ck3DS.initialized)
+        ck3DS.initialize3DS(environment);
+    }
+  }
   var message = {
     action: ENABLE3DS,
     data: {
-      waitForResponse,
-      waitForResponseTimeout
+      environment,
+      verificationEnabled: !!handle3DSResults
     }
   };
   this.logAction(ENABLE3DS);
   this.postMessage(message);
+}
+/**
+ *
+ */
+export function disable3DS() {
+  var message = {
+    action: DISABLE3DS,
+    data: {}
+  };
+  this.logAction(ENABLE3DS);
+  this.postMessage(message);
+}
+/**
+ *
+ */
+export function verify3DS(verifyData) {
+  if (typeof window.ck3DS !== 'undefined')
+    ck3DS.verifyTrans(verifyData);
+  else
+    this.log('verify3DS called without using enable3DS first to attach a handler!')
 }
 /**
  *
