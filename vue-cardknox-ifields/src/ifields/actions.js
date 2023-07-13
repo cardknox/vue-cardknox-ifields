@@ -59,7 +59,7 @@ export function getToken() {
 export function enable3DS(environment, handle3DSResults) {
   if (!!handle3DSResults) {
     if (typeof window.ck3DS !== 'undefined') {
-      ck3DS.configuration.onVerifyComplete = handle3DSResults;
+      ck3DS.configuration.onVerifyComplete = handle3DSResultsWrapper(handle3DSResults);
       ck3DS.configuration.enableConsoleLogging = this.options.enableLogging;
       if (!ck3DS.initialized)
         ck3DS.initialize3DS(environment);
@@ -74,6 +74,12 @@ export function enable3DS(environment, handle3DSResults) {
   };
   this.logAction(ENABLE3DS);
   this.postMessage(message);
+}
+
+function handle3DSResultsWrapper(handle3DSResults) {
+  return function (actionCode, xCavv, xEciFlag, xRefNum, xAuthenticateStatus, xSignatureVerification) {
+    handle3DSResults(actionCode, xCavv, xEciFlag, xRefNum, xAuthenticateStatus, xSignatureVerification, ck3DS.error);
+  }
 }
 /**
  *

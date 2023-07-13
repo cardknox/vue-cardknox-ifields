@@ -1,7 +1,7 @@
 <template>
-  <div class="center">
-    <b-button @click="submit" :disabled="!valid" type="is-success" rounded>Submit</b-button>
-  </div>
+    <div class="center">
+        <b-button @click="submit" :disabled="!valid" type="is-success" rounded>Submit</b-button>
+    </div>
 </template>
 
 <script>
@@ -13,7 +13,8 @@ export default {
         amount: Number,
         cardData: Object,
         valid: Boolean,
-        doSubmit: Boolean
+        doSubmit: Boolean,
+        verify3DS: Function
     },
     methods: {
         submit() {
@@ -34,18 +35,23 @@ export default {
             console.log(request);
             fetch(
                 "https://x1.cardknox.com/gateway?" +
-                    Object.entries(request)
-                        .map(e => e.map(e1 => encodeURIComponent(e1)).join("="))
-                        .join("&")
+                Object.entries(request)
+                    .map(e => e.map(e1 => encodeURIComponent(e1)).join("="))
+                    .join("&")
             )
-                .then(r => r.json())
-                .then(console.log)
+                .then(r => {
+                    console.log(r);
+                    const params = new URLSearchParams(r);
+                    if (params.get('xResult ') === 'V') {
+                        this.verify3DS({ xRefNum: params.get('xRefNum'), xVerifyUrl: params.get('xVerifyUrl'), xVerifyPayload: params.get('xVerifyPayload'), xInternalID: params.get('xInternalID') })
+                    }
+                })
                 .catch(console.error);
         }
     },
     watch: {
-        doSubmit(val){
-            if(val)
+        doSubmit(val) {
+            if (val)
                 this.submit();
         }
     }

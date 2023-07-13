@@ -12,7 +12,7 @@
             <div class="main">
                 <p id="total">
                     Your Total:
-                    <span id="total-amount">${{amount}}</span>
+                    <span id="total-amount">${{ amount }}</span>
                 </p>
                 <section class="box card-box">
                     <b-field label="Name">
@@ -38,14 +38,14 @@
                             @blur="onUpdate"
                         />
                     </b-field>
-                        <button @click="focus(CARD_TYPE)">Focus</button>
-                        <button @click="clear(CARD_TYPE)">Clear</button>
-                        <button @click="submit(CARD_TYPE)">Submit</button>
+                    <button @click="focus(CARD_TYPE)">Focus</button>
+                    <button @click="clear(CARD_TYPE)">Clear</button>
+                    <button @click="submit(CARD_TYPE)">Submit</button>
                     <b-field label="Expiration">
                         <div>
                             <b-dropdown v-model="cardData.month" hoverable aria-role="list">
                                 <button class="button is-success" slot="trigger">
-                                    <span>{{cardData.month}}</span>
+                                    <span>{{ cardData.month }}</span>
                                     <b-icon icon="menu-down"></b-icon>
                                 </button>
 
@@ -58,7 +58,7 @@
                             </b-dropdown>
                             <b-dropdown v-model="cardData.year" hoverable aria-role="list">
                                 <button class="button is-success" slot="trigger">
-                                    <span>{{cardData.year}}</span>
+                                    <span>{{ cardData.year }}</span>
                                     <b-icon icon="menu-down"></b-icon>
                                 </button>
 
@@ -91,17 +91,18 @@
                             @blur="onUpdate"
                         />
                     </b-field>
-                        <button @click="focus(CVV_TYPE)">Focus</button>
-                        <button @click="clear(CVV_TYPE)">Clear</button>
-                        <button @click="submit(CVV_TYPE)">Submit</button>
-                    <submit :amount="amount" :doSubmit="doSubmit" :cardData="cardData" :valid="ready" />
+                    <button @click="focus(CVV_TYPE)">Focus</button>
+                    <button @click="clear(CVV_TYPE)">Clear</button>
+                    <button @click="submit(CVV_TYPE)">Submit</button>
+                    <submit :amount="amount" :doSubmit="doSubmit" :cardData="cardData" :valid="ready"
+                        :verify3DS="verify3DS" />
                 </section>
                 <section class="box result-box">
                     <b-field label="Card Token">
-                        <p class="token-field" id="card-token">{{this.cardData.cardToken}}</p>
+                        <p class="token-field" id="card-token">{{ this.cardData.cardToken }}</p>
                     </b-field>
                     <b-field label="CVV Token">
-                        <p class="token-field" id="cvv-token">{{this.cardData.cvvToken}}</p>
+                        <p class="token-field" id="cvv-token">{{ this.cardData.cvvToken }}</p>
                     </b-field>
                 </section>
             </div>
@@ -120,7 +121,7 @@ export default {
         ifields,
         submit
     },
-    data: function() {
+    data: function () {
         return {
             account: {
                 xKey: "",
@@ -219,7 +220,6 @@ export default {
             this.cardData = Object.assign({}, this.cardData, {
                 cardToken: data.xToken
             });
-            this.ifields.verify3DS({});
         },
         onCvvToken({ data }) {
             console.log("IFrame cvv token received");
@@ -230,20 +230,20 @@ export default {
         onError({ data }) {
             console.error("IFrame errored", data);
         },
-        focus(type){
+        focus(type) {
             const ref = this.getRefFromType(type);
             ref.focusIfield();
         },
-        clear(type){
+        clear(type) {
             const ref = this.getRefFromType(type);
             ref.clearIfield();
             this.cardData[type + "Token"] = "";
         },
-        submit(type){
+        submit(type) {
             const ref = this.getRefFromType(type);
             ref.getToken();
         },
-        getRefFromType(type){
+        getRefFromType(type) {
             switch (type) {
                 case CARD_TYPE:
                     return this.$refs.cardIfield;
@@ -253,8 +253,28 @@ export default {
                     throw Error('unknown type');
             }
         },
-        handle3DSResults() {
-            
+        verify3DS(verifyData) {
+            window.ck3DS.verifyTrans(verifyData);
+        },
+        async handle3DSResults(actionCode, xCavv, xEciFlag, xRefNum, xAuthenticateStatus, xSignatureVerification, error) {
+            try {
+                console.log('handle3DSResults')
+                const postData = {
+                    x3dsError: error,
+                    xRefNum: xRefNum,
+                    xCavv: xCavv,
+                    xEci: xEciFlag,
+                    x3dsAuthenticationStatus: xAuthenticateStatus,
+                    x3dsSignatureVerificationStatus: xSignatureVerification,
+                    x3dsActionCode: actionCode,
+                };
+                const response = await fetch('your-server', { method: 'POST', body: JSON.stringify(postData) });    //send to https://x1.cardknox.com/verify
+                //TODO: handle response
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+                //TODO: handle error
+            }
         }
     }
 };
@@ -264,38 +284,45 @@ export default {
 html {
     background-color: papayawhip;
 }
+
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 .main {
     width: 65%;
     margin: 5% 10%;
 }
+
 iframe {
     height: 40px;
     width: 100%;
     max-width: 100%;
 }
+
 .card-box {
     max-width: 450px;
     min-width: 406px;
     width: 425px;
     float: left;
 }
-.result-box{
+
+.result-box {
     max-width: 450px;
     min-width: 406px;
     width: 425px;
     float: right;
 }
+
 #total {
     color: #00103a;
     font-size: 32px;
     font-weight: bold;
 }
-.token-field{
+
+.token-field {
     word-wrap: break-word;
 }
 </style>

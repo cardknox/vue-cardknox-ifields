@@ -228,6 +228,8 @@ Vue.component('app', {
 });
 ```
 
+## 3D Secure
+
 
 
 ## Props
@@ -461,4 +463,4 @@ Vue.component('app', {
 
 ---
 
-**iFields Version:** [2.6.2006.0102](https://cdn.cardknox.com/ifields/versions.htm)
+**iFields Version:** [2.15.2302.0801](https://cdn.cardknox.com/ifields/versions.htm)
