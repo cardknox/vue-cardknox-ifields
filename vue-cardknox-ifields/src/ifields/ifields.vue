@@ -107,7 +107,7 @@ export default {
       if (val.enable3DS) {
         if (!val.environment)
           return;
-        if (!oldVal.enable3DS || val.environment !== oldVal.environment || val.handle3DSResults !== oldVal.handle3DSResults)
+        if (this.iFrameLoaded && (!oldVal.enable3DS || val.environment !== oldVal.environment || val.handle3DSResults !== oldVal.handle3DSResults))
           this.enable3DS(val.environment, val.handle3DSResults);
       }
       else if (oldVal.enable3DS) {
