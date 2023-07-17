@@ -15,8 +15,33 @@
                     <span id="total-amount">${{ amount }}</span>
                 </p>
                 <section class="box card-box">
-                    <b-field label="Name">
-                        <b-input placeholder="Name" v-model="cardData.name" ref="inputRef"></b-input>
+                    <b-field grouped>
+                        <b-field label="First Name" expanded>
+                            <b-input placeholder="First Name" v-model="cardData.firstName" ref="inputRef"></b-input>
+                        </b-field>
+                        <b-field label="Last Name" expanded>
+                            <b-input placeholder="Last Name" v-model="cardData.lastName"></b-input>
+                        </b-field>
+                    </b-field>
+                    <b-field label="Address">
+                        <b-input placeholder="Address" v-model="cardData.address" ></b-input>
+                    </b-field>
+                    <b-field grouped>
+                        <b-field label="City" expanded>
+                            <b-input placeholder="City" v-model="cardData.city" ></b-input>
+                        </b-field>
+                        <b-field label="State" class="smallWidth">
+                            <b-input placeholder="State" v-model="cardData.state"></b-input>
+                        </b-field>
+                        <b-field label="Zip" class="smallWidth">
+                            <b-input placeholder="Zip" v-model="cardData.zip"></b-input>
+                        </b-field>
+                    </b-field>
+                    <b-field label="Mobile">
+                        <b-input placeholder="Mobile" v-model="cardData.mobile" type="tel"></b-input>
+                    </b-field>
+                    <b-field label="Email">
+                        <b-input placeholder="Email" v-model="cardData.email" type="email"></b-input>
                     </b-field>
                     <b-field label="Card Number">
                         <ifields
@@ -180,7 +205,14 @@ export default {
                 year: new Date().getFullYear(),
                 cardToken: "",
                 cvvToken: "",
-                name: ""
+                firstName: "John",
+                lastName: "Doe",
+                address: "123 Somewhere",
+                city: "Anywhere",
+                state: "NY",
+                zip: "98765",
+                mobile: "1234567890",
+                email: "test@test.com"
             },
             doSubmit: false
         };
@@ -324,5 +356,8 @@ iframe {
 
 .token-field {
     word-wrap: break-word;
+}
+.smallWidth {
+    max-width: 23%;
 }
 </style>

@@ -17,7 +17,7 @@ export default {
         verify3DS: Function
     },
     methods: {
-        submit() {
+        async submit() {
             let request = {
                 xKey: "",
                 xSoftwareName: "Test-Vue-iFields",
@@ -26,27 +26,41 @@ export default {
                 xCommand: "cc:sale",
                 xAmount: this.amount,
                 xCardnum: this.cardData.cardToken,
+                xBillFirstName: this.cardData.firstName,
+                xBillLastName: this.cardData.lastName,
+                xBillStreet: this.cardData.address,
+                xBillCity: this.cardData.city,
+                xBillZip: this.cardData.zip,
+                xBillState: this.cardData.state,
+                xBillMobile: this.cardData.mobile,
+                xEmail: this.cardData.email,
                 xExp: format(
                     new Date(this.cardData.year, this.cardData.month - 1),
                     "MMyy"
                 ),
                 xCvv: this.cardData.cvvToken
             };
-            console.log(request);
-            fetch(
-                "https://x1.cardknox.com/gateway?" +
-                Object.entries(request)
-                    .map(e => e.map(e1 => encodeURIComponent(e1)).join("="))
-                    .join("&")
-            )
-                .then(r => {
-                    console.log(r);
-                    const params = new URLSearchParams(r);
-                    if (params.get('xResult ') === 'V') {
-                        this.verify3DS({ xRefNum: params.get('xRefNum'), xVerifyUrl: params.get('xVerifyUrl'), xVerifyPayload: params.get('xVerifyPayload'), xInternalID: params.get('xInternalID') })
-                    }
-                })
-                .catch(console.error);
+            try {
+                const gatewayResponse = await fetch(
+                    "https://x1.cardknox.com/gateway?" +
+                    Object.entries(request)
+                        .map(e => e.map(e1 => encodeURIComponent(e1)).join("="))
+                        .join("&")
+                );
+                const responseBody = await gatewayResponse.text();
+                console.log("Gateway Response", responseBody);
+                const params = new URLSearchParams(responseBody);
+                if (params.get('xResult') === 'V') {
+                    this.verify3DS({
+                        xRefNum: params.get('xRefNum'),
+                        xVerifyURL: params.get('xVerifyURL'),
+                        xVerifyPayload: params.get('xVerifyPayload'),
+                        xInternalID: params.get('xInternalID')
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
     },
     watch: {
