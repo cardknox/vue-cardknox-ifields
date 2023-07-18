@@ -10,7 +10,7 @@ import format from "date-fns/lightFormat";
 export default {
     name: "submit",
     props: {
-        amount: Number,
+        amount: String,
         cardData: Object,
         valid: Boolean,
         doSubmit: Boolean,
@@ -22,7 +22,7 @@ export default {
                 xKey: "",
                 xSoftwareName: "Test-Vue-iFields",
                 xSoftwareVersion: "1.0",
-                xVersion: "4.5.8",
+                xVersion: "5.0.0",
                 xCommand: "cc:sale",
                 xAmount: this.amount,
                 xCardnum: this.cardData.cardToken,
@@ -41,18 +41,14 @@ export default {
                 xCvv: this.cardData.cvvToken
             };
             try {
-                const gatewayResponse = await fetch(
-                    "https://x1.cardknox.com/gateway?" +
-                    Object.entries(request)
-                        .map(e => e.map(e1 => encodeURIComponent(e1)).join("="))
-                        .join("&")
-                );
-                const responseBody = await gatewayResponse.text();
+                const gatewayResponse = await fetch("https://x1.cardknox.com/gatewayjson", {
+                    method: 'POST',
+                    body: JSON.stringify(request)
+                });
+                const responseBody = await gatewayResponse.json();
                 console.log("Gateway Response", responseBody);
-                const params = new URLSearchParams(responseBody);
-                if (params.get('xResult') === 'V') {
-                    this.verify3DS(JSON.parse('{"' + decodeURI(responseBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}'));
-                }
+                if (responseBody.xResult === 'V')
+                    this.verify3DS(responseBody);
             } catch (error) {
                 console.error(error);
             }
