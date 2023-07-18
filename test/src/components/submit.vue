@@ -51,12 +51,7 @@ export default {
                 console.log("Gateway Response", responseBody);
                 const params = new URLSearchParams(responseBody);
                 if (params.get('xResult') === 'V') {
-                    this.verify3DS({
-                        xRefNum: params.get('xRefNum'),
-                        xVerifyURL: params.get('xVerifyURL'),
-                        xVerifyPayload: params.get('xVerifyPayload'),
-                        xInternalID: params.get('xInternalID')
-                    });
+                    this.verify3DS(JSON.parse('{"' + decodeURI(responseBody).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}'));
                 }
             } catch (error) {
                 console.error(error);
