@@ -17,7 +17,7 @@ import {
 } from "./constants";
 
 export function ping() {
-  var message = {
+  const message = {
     action: PING
   };
   this.logAction(PING);
@@ -28,7 +28,7 @@ export function ping() {
  * @param {AccountData} data
  */
 export function setAccount(data) {
-  var message = {
+  const message = {
     action: SET_ACCOUNT_DATA,
     data
   };
@@ -36,7 +36,7 @@ export function setAccount(data) {
   this.postMessage(message);
 }
 export function init() {
-  var message = {
+  const message = {
     action: INIT,
     tokenType: this.type,
     referrer: window.location.toString()
@@ -45,7 +45,7 @@ export function init() {
   this.postMessage(message);
 }
 export function getToken() {
-  var message = {
+  const message = {
     action: GET_TOKEN
   };
   this.logAction(GET_TOKEN);
@@ -57,7 +57,7 @@ export function getToken() {
  * @param {string} environment
  */
 export function enable3DS(environment, handle3DSResults) {
-  if (!!handle3DSResults) {
+  if (handle3DSResults) {
     if (typeof window.ck3DS !== 'undefined') {
       ck3DS.configuration.onVerifyComplete = handle3DSResultsWrapper(handle3DSResults);
       ck3DS.configuration.enableConsoleLogging = this.options.enableLogging;
@@ -65,7 +65,7 @@ export function enable3DS(environment, handle3DSResults) {
         ck3DS.initialize3DS(environment);
     }
   }
-  var message = {
+  const message = {
     action: ENABLE3DS,
     data: {
       environment,
@@ -85,7 +85,7 @@ function handle3DSResultsWrapper(handle3DSResults) {
  *
  */
 export function disable3DS() {
-  var message = {
+  const message = {
     action: DISABLE3DS,
     data: {}
   };
@@ -107,7 +107,7 @@ export function verify3DS(verifyData) {
  * @param {string} value
  */
 export function update3DS(fieldName, value) {
-  var message = {
+  const message = {
     action: UPDATE3DS,
     data: {
       fieldName,
@@ -122,7 +122,7 @@ export function update3DS(fieldName, value) {
  * @param {string} issuer
  */
 export function updateIssuer(issuer) {
-  var message = {
+  const message = {
     action: UPDATE_ISSUER,
     issuer
   };
@@ -134,7 +134,7 @@ export function updateIssuer(issuer) {
  * @param {string} data
  */
 export function setPlaceholder(data) {
-  var message = {
+  const message = {
     action: SET_PLACEHOLDER,
     data
   };
@@ -146,7 +146,7 @@ export function setPlaceholder(data) {
  * @param {string} formatChar
  */
 export function enableAutoFormat(formatChar) {
-  var message = {
+  const message = {
     action: FORMAT,
     data: {
       formatChar
@@ -156,7 +156,7 @@ export function enableAutoFormat(formatChar) {
   this.postMessage(message);
 }
 export function enableLogging() {
-  var message = {
+  const message = {
     action: ENABLE_LOGGING
   };
   this.logAction(ENABLE_LOGGING);
@@ -167,7 +167,7 @@ export function enableLogging() {
  * @param {string} formId - The ID attribute of the form to trigger submit on
  */
 export function enableAutoSubmit(formId) {
-  var message = {
+  const message = {
     action: ENABLE_AUTO_SUBMIT,
     data: {
       formId
@@ -177,7 +177,7 @@ export function enableAutoSubmit(formId) {
   this.postMessage(message);
 }
 export function setStyle(data) {
-  var message = {
+  const message = {
     action: STYLE,
     data
   };
@@ -186,14 +186,14 @@ export function setStyle(data) {
 }
 //----------------------Public Actions
 export function focusIfield() {
-  var message = {
+  const message = {
     action: FOCUS
   };
   this.logAction(FOCUS);
   this.postMessage(message);
 }
 export function clearIfield() {
-  var message = {
+  const message = {
     action: CLEAR_DATA
   };
   this.logAction(CLEAR_DATA);
