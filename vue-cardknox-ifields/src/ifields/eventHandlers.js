@@ -4,12 +4,8 @@ import {
     ERROR,
     AUTO_SUBMIT,
     UPDATE,
-    AMOUNT,
-    MONTH,
-    YEAR,
     CARD_TYPE,
-    CVV_TYPE,
-    THREEDS_ENVIRONMENT
+    CVV_TYPE
 } from "./constants";
 
 /**
