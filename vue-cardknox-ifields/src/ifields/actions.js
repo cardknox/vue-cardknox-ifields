@@ -52,9 +52,24 @@ export function getToken() {
   this.tokenLoading = true;
   this.postMessage(message);
 }
+
+/**
+ * 
+ * @callback Handle3DSResults
+ * @param {string} actionCode
+ * @param {string} xCavv
+ * @param {string} xEciFlag
+ * @param {string} xRefNum
+ * @param {string} xAuthenticateStatus
+ * @param {string} xSignatureVerification
+ * @param {string} error
+ * @returns {void}
+ */
+
 /**
  *
  * @param {string} environment
+ * @param {Handle3DSResults} handle3DSResults
  */
 export function enable3DS(environment, handle3DSResults) {
   if (handle3DSResults) {
