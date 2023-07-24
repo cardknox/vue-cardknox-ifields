@@ -2,8 +2,6 @@
 
 ## A Vue component for Cardknox iFields
 
----
-
 ## Cardknox
 
 Cardknox is a developer-friendly payment gateway integration provider for in-store, online, or mobile transactions
