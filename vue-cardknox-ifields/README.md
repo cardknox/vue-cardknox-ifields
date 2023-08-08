@@ -373,7 +373,7 @@ Vue.component('app', {
     <tr>
         <td>handle3DSResults</td>
         <td><a href="#handle3dsresults-callback">Handle3DSResults</a></td>
-        <td>A callback that will be called when the payment is validated. This data should be sent to the Cardknox gateway by the your backend server. See <a href="https://docs.cardknox.com/cardknox-products/3d-secure">https://docs.cardknox.com/cardknox-products/3d-secure</a></td>
+        <td>A callback that will be called when the payment is validated. This data should be sent to the Cardknox gateway by your back-end server. See <a href="https://docs.cardknox.com/cardknox-products/3d-secure">https://docs.cardknox.com/cardknox-products/3d-secure</a></td>
     </tr>
 </table>
 
