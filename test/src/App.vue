@@ -276,7 +276,7 @@ export default {
                     x3dsActionCode: actionCode,
                 };
                 console.log(postData);
-                const response = await fetch('https://x1.cardknox.com/verifyjson', { method: 'POST', body: JSON.stringify(postData) });
+                const response = await fetch('/api/verifyjson', { method: 'POST', body: JSON.stringify(postData), headers: {'Content-Type': 'application/json'} });
                 this.gateway3dsResponse = await response.json();
             } catch (error) {
                 console.error(error);

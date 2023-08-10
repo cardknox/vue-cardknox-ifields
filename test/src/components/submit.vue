@@ -41,9 +41,10 @@ export default {
                 xCvv: this.cardData.cvvToken
             };
             try {
-                const gatewayResponse = await fetch("https://x1.cardknox.com/gatewayjson", {
+                const gatewayResponse = await fetch("/api/gatewayjson", {
                     method: 'POST',
-                    body: JSON.stringify(request)
+                    body: JSON.stringify(request),
+                    headers: { 'Content-Type': 'application/json' }
                 });
                 const responseBody = await gatewayResponse.json();
                 console.log("Gateway Response", responseBody);
