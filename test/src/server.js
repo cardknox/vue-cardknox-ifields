@@ -6,6 +6,8 @@ const axios = require('axios');
 
 app.use(express.json());
 
+app.disable("x-powered-by");
+
 const validPaths = ['verifyjson', 'gatewayjson'];
 app.post('/api/:path', async (req, res) => {
   console.log(req.body);
