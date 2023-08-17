@@ -4,9 +4,6 @@ import {
     ERROR,
     AUTO_SUBMIT,
     UPDATE,
-    AMOUNT,
-    MONTH,
-    YEAR,
     CARD_TYPE,
     CVV_TYPE
 } from "./constants";
@@ -47,11 +44,8 @@ export function _onLoad() {
     this.iFrameLoaded = true;
     const newAccount = this.transformAccountData(this.account);
     this.setAccount(newAccount);
-    if (this.type === CARD_TYPE && this.threeDS.enable3DS) {
-        this.enable3DS(this.threeDS.waitForResponse, this.threeDS.waitForResponseTimeout);
-        this.update3DS(AMOUNT, this.threeDS.amount);
-        this.update3DS(MONTH, this.threeDS.month);
-        this.update3DS(YEAR, this.threeDS.year);
+    if (this.type === CARD_TYPE && this.threeDS.enable3DS && !!this.threeDS.environment) {
+        this.enable3DS(this.threeDS.environment, this.threeDS.handle3DSResults);
     }
     this.init();
     if (this.type === CVV_TYPE && this.issuer)

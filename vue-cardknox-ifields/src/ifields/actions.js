@@ -11,12 +11,13 @@ import {
   ENABLE_LOGGING,
   ENABLE_AUTO_SUBMIT,
   ENABLE3DS,
+  DISABLE3DS,
   UPDATE3DS,
   UPDATE_ISSUER
 } from "./constants";
 
 export function ping() {
-  var message = {
+  const message = {
     action: PING
   };
   this.logAction(PING);
@@ -27,7 +28,7 @@ export function ping() {
  * @param {AccountData} data
  */
 export function setAccount(data) {
-  var message = {
+  const message = {
     action: SET_ACCOUNT_DATA,
     data
   };
@@ -35,7 +36,7 @@ export function setAccount(data) {
   this.postMessage(message);
 }
 export function init() {
-  var message = {
+  const message = {
     action: INIT,
     tokenType: this.type,
     referrer: window.location.toString()
@@ -44,28 +45,76 @@ export function init() {
   this.postMessage(message);
 }
 export function getToken() {
-  var message = {
+  const message = {
     action: GET_TOKEN
   };
   this.logAction(GET_TOKEN);
   this.tokenLoading = true;
   this.postMessage(message);
 }
+
+/**
+ * 
+ * @callback Handle3DSResults
+ * @param {string} actionCode
+ * @param {string} xCavv
+ * @param {string} xEciFlag
+ * @param {string} xRefNum
+ * @param {string} xAuthenticateStatus
+ * @param {string} xSignatureVerification
+ * @param {string} error
+ * @returns {void}
+ */
+
 /**
  *
- * @param {boolean} waitForResponse
- * @param {number} waitForResponseTimeout
+ * @param {string} environment
+ * @param {Handle3DSResults} handle3DSResults
  */
-export function enable3DS(waitForResponse, waitForResponseTimeout) {
-  var message = {
+export function enable3DS(environment, handle3DSResults) {
+  if (handle3DSResults) {
+    if (typeof window.ck3DS !== 'undefined') {
+      ck3DS.configuration.onVerifyComplete = handle3DSResultsWrapper(handle3DSResults);
+      ck3DS.configuration.enableConsoleLogging = this.options.enableLogging;
+      if (!ck3DS.initialized)
+        ck3DS.initialize3DS(environment);
+    }
+  }
+  const message = {
     action: ENABLE3DS,
     data: {
-      waitForResponse,
-      waitForResponseTimeout
+      environment,
+      verificationEnabled: !!handle3DSResults
     }
   };
   this.logAction(ENABLE3DS);
   this.postMessage(message);
+}
+
+function handle3DSResultsWrapper(handle3DSResults) {
+  return function (actionCode, xCavv, xEciFlag, xRefNum, xAuthenticateStatus, xSignatureVerification) {
+    handle3DSResults(actionCode, xCavv, xEciFlag, xRefNum, xAuthenticateStatus, xSignatureVerification, ck3DS.error);
+  }
+}
+/**
+ *
+ */
+export function disable3DS() {
+  const message = {
+    action: DISABLE3DS,
+    data: {}
+  };
+  this.logAction(ENABLE3DS);
+  this.postMessage(message);
+}
+/**
+ *
+ */
+export function verify3DS(verifyData) {
+  if (typeof window.ck3DS !== 'undefined')
+    ck3DS.verifyTrans(verifyData);
+  else
+    this.log('verify3DS called without using enable3DS first to attach a handler!')
 }
 /**
  *
@@ -73,7 +122,7 @@ export function enable3DS(waitForResponse, waitForResponseTimeout) {
  * @param {string} value
  */
 export function update3DS(fieldName, value) {
-  var message = {
+  const message = {
     action: UPDATE3DS,
     data: {
       fieldName,
@@ -88,7 +137,7 @@ export function update3DS(fieldName, value) {
  * @param {string} issuer
  */
 export function updateIssuer(issuer) {
-  var message = {
+  const message = {
     action: UPDATE_ISSUER,
     issuer
   };
@@ -100,7 +149,7 @@ export function updateIssuer(issuer) {
  * @param {string} data
  */
 export function setPlaceholder(data) {
-  var message = {
+  const message = {
     action: SET_PLACEHOLDER,
     data
   };
@@ -112,7 +161,7 @@ export function setPlaceholder(data) {
  * @param {string} formatChar
  */
 export function enableAutoFormat(formatChar) {
-  var message = {
+  const message = {
     action: FORMAT,
     data: {
       formatChar
@@ -122,7 +171,7 @@ export function enableAutoFormat(formatChar) {
   this.postMessage(message);
 }
 export function enableLogging() {
-  var message = {
+  const message = {
     action: ENABLE_LOGGING
   };
   this.logAction(ENABLE_LOGGING);
@@ -133,7 +182,7 @@ export function enableLogging() {
  * @param {string} formId - The ID attribute of the form to trigger submit on
  */
 export function enableAutoSubmit(formId) {
-  var message = {
+  const message = {
     action: ENABLE_AUTO_SUBMIT,
     data: {
       formId
@@ -143,7 +192,7 @@ export function enableAutoSubmit(formId) {
   this.postMessage(message);
 }
 export function setStyle(data) {
-  var message = {
+  const message = {
     action: STYLE,
     data
   };
@@ -152,14 +201,14 @@ export function setStyle(data) {
 }
 //----------------------Public Actions
 export function focusIfield() {
-  var message = {
+  const message = {
     action: FOCUS
   };
   this.logAction(FOCUS);
   this.postMessage(message);
 }
 export function clearIfield() {
-  var message = {
+  const message = {
     action: CLEAR_DATA
   };
   this.logAction(CLEAR_DATA);

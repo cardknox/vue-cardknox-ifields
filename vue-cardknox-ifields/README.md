@@ -2,8 +2,6 @@
 
 ## A Vue component for Cardknox iFields
 
----
-
 ## Cardknox
 
 Cardknox is a developer-friendly payment gateway integration provider for in-store, online, or mobile transactions
@@ -228,8 +226,6 @@ Vue.component('app', {
 });
 ```
 
-
-
 ## Props
 
 <table>
@@ -265,7 +261,7 @@ Vue.component('app', {
     </tr>
     <tr>
         <td>threeDS</td>
-        <td><a href="">ThreeDS</a></td>
+        <td><a href="#threeds">ThreeDS</a></td>
         <td></td>
         <td></td>
     </tr>
@@ -361,29 +357,52 @@ Vue.component('app', {
         <td>Turn 3DSecure on and off</td>
     </tr>
     <tr>
-        <td>waitForResponse</td>
-        <td>Boolean</td>
-        <td>Determine whether iFields should wait for a response from 3DSecure before getting the token</td>
+        <td>environment</td>
+        <td>string</td>
+        <td>The 3DS environment<br/> 
+        Valid values are:
+            <ul>
+                <li>staging</li>
+                <li>production</li>
+            </ul>
+        These values can be imported from the iFields package
+            <br/>
+            <pre>import { THREEDS_ENVIRONMENT } from "vue-cardknox-ifields";</pre>
+        </td>
     </tr>
     <tr>
-        <td>waitForResponseTimeout</td>
-        <td>Number</td>
-        <td>The 3DSecure response timeout in milli-seconds. The default value is 2000 (2 seconds).</td>
+        <td>handle3DSResults</td>
+        <td><a href="#handle3dsresults-callback">Handle3DSResults</a></td>
+        <td>A callback that will be called when the payment is validated. This data should be sent to the Cardknox gateway by your back-end server. See <a href="https://docs.cardknox.com/cardknox-products/3d-secure">https://docs.cardknox.com/cardknox-products/3d-secure</a></td>
+    </tr>
+</table>
+
+##### Handle3DSResults callback
+
+<table>
+    <tr>
+        <th>Parameters</th>
     </tr>
     <tr>
-        <td>amount</td>
-        <td>Number</td>
-        <td>The transaction amount</td>
+        <td>ActionCode</td>
     </tr>
     <tr>
-        <td>month</td>
-        <td>Number</td>
-        <td>The 2-digit card expiration month</td>
+        <td>CAVV</td>
     </tr>
     <tr>
-        <td>year</td>
-        <td>Number</td>
-        <td>The 2-digit card expiration year</td>
+        <td>ECIFlag</td>
+    </tr>
+    <tr>
+        <td>CardknoxRefnum</td>
+    </tr>
+    <tr>
+        <td>PAResStatus</td>
+    </tr>
+    <tr>
+        <td>SignatureVerification</td>
+    </tr>
+    <tr>
+        <td>Error</td>
     </tr>
 </table>
 
@@ -461,4 +480,4 @@ Vue.component('app', {
 
 ---
 
-**iFields Version:** [2.6.2006.0102](https://cdn.cardknox.com/ifields/versions.htm)
+**iFields Version:** [2.15.2302.0801](https://cdn.cardknox.com/ifields/versions.htm)

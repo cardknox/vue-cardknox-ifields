@@ -5,12 +5,16 @@
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "proxy": "node src/server"
   },
   "dependencies": {
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
     "buefy": "^0.8.15",
     "core-js": "^3.6.4",
     "date-fns": "^2.12.0",
+    "express": "^4.18.2",
     "vue": "^2.6.11",
     "vue-cardknox-ifields": "file:../vue-cardknox-ifields"
   },

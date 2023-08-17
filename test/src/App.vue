@@ -12,96 +12,92 @@
             <div class="main">
                 <p id="total">
                     Your Total:
-                    <span id="total-amount">${{amount}}</span>
+                    <span id="total-amount">${{ amount }}</span>
                 </p>
                 <section class="box card-box">
-                    <b-field label="Name">
-                        <b-input placeholder="Name" v-model="cardData.name" ref="inputRef"></b-input>
+                    <b-field label="Amount" expanded>
+                        <b-input type="num" placeholder="Amount" v-model="amount"></b-input>
+                    </b-field>
+                    <b-field grouped>
+                        <b-field label="First Name" expanded>
+                            <b-input placeholder="First Name" v-model="cardData.firstName" ref="inputRef"></b-input>
+                        </b-field>
+                        <b-field label="Last Name" expanded>
+                            <b-input placeholder="Last Name" v-model="cardData.lastName"></b-input>
+                        </b-field>
+                    </b-field>
+                    <b-field label="Address">
+                        <b-input placeholder="Address" v-model="cardData.address"></b-input>
+                    </b-field>
+                    <b-field grouped>
+                        <b-field label="City" expanded>
+                            <b-input placeholder="City" v-model="cardData.city"></b-input>
+                        </b-field>
+                        <b-field label="State" class="smallWidth">
+                            <b-input placeholder="State" v-model="cardData.state"></b-input>
+                        </b-field>
+                        <b-field label="Zip" class="smallWidth">
+                            <b-input placeholder="Zip" v-model="cardData.zip"></b-input>
+                        </b-field>
+                    </b-field>
+                    <b-field label="Mobile">
+                        <b-input placeholder="Mobile" v-model="cardData.mobile" type="tel"></b-input>
+                    </b-field>
+                    <b-field label="Email">
+                        <b-input placeholder="Email" v-model="cardData.email" type="email"></b-input>
                     </b-field>
                     <b-field label="Card Number">
-                        <ifields
-                            :account="account"
-                            :type="CARD_TYPE"
-                            :options="ifieldCardOptions"
-                            :threeDS="threeDS"
-                            ref="cardIfield"
-                            @load="onLoad"
-                            @submit="onSubmit"
-                            @token="onCardToken"
-                            @error="onError"
-                            @keypress="onUpdate"
-                            @click="onUpdate"
-                            @input="onUpdate"
-                            @focus="onUpdate"
-                            @dblclick="onUpdate"
-                            @change="onUpdate"
-                            @blur="onUpdate"
-                        />
+                        <ifields :account="account" :type="CARD_TYPE" :options="ifieldCardOptions" :threeDS="threeDS"
+                            ref="cardIfield" @load="onLoad" @submit="onSubmit" @token="onCardToken" @error="onError"
+                            @keypress="onUpdate" @click="onUpdate" @input="onUpdate" @focus="onUpdate" @dblclick="onUpdate"
+                            @change="onUpdate" @blur="onUpdate" class="ifields" />
                     </b-field>
-                        <button @click="focus(CARD_TYPE)">Focus</button>
-                        <button @click="clear(CARD_TYPE)">Clear</button>
-                        <button @click="submit(CARD_TYPE)">Submit</button>
+                    <button @click="focus(CARD_TYPE)">Focus</button>
+                    <button @click="clear(CARD_TYPE)">Clear</button>
+                    <button @click="submit(CARD_TYPE)">Submit</button>
                     <b-field label="Expiration">
                         <div>
                             <b-dropdown v-model="cardData.month" hoverable aria-role="list">
                                 <button class="button is-success" slot="trigger">
-                                    <span>{{cardData.month}}</span>
+                                    <span>{{ cardData.month }}</span>
                                     <b-icon icon="menu-down"></b-icon>
                                 </button>
 
-                                <b-dropdown-item
-                                    :value="i"
-                                    v-for="i in 12"
-                                    :key="i"
-                                    aria-role="listitem"
-                                >{{i}}</b-dropdown-item>
+                                <b-dropdown-item :value="i" v-for="i in 12" :key="i" aria-role="listitem">{{ i
+                                }}</b-dropdown-item>
                             </b-dropdown>
                             <b-dropdown v-model="cardData.year" hoverable aria-role="list">
                                 <button class="button is-success" slot="trigger">
-                                    <span>{{cardData.year}}</span>
+                                    <span>{{ cardData.year }}</span>
                                     <b-icon icon="menu-down"></b-icon>
                                 </button>
 
-                                <b-dropdown-item
-                                    :value="i + cardData.year - 1"
-                                    v-for="i in 15"
-                                    :key="i"
-                                    aria-role="listitem"
-                                >{{i + cardData.year - 1}}</b-dropdown-item>
+                                <b-dropdown-item :value="i + cardData.year - 1" v-for="i in 15" :key="i"
+                                    aria-role="listitem">{{ i + cardData.year - 1 }}</b-dropdown-item>
                             </b-dropdown>
                         </div>
                     </b-field>
                     <b-field label="CVV">
-                        <ifields
-                            :account="account"
-                            :type="CVV_TYPE"
-                            :issuer="issuer"
-                            :options="ifieldCvvOptions"
-                            ref="cvvIfield"
-                            @load="onLoad"
-                            @submit="onSubmit"
-                            @token="onCvvToken"
-                            @error="onError"
-                            @keypress="onUpdate"
-                            @click="onUpdate"
-                            @input="onUpdate"
-                            @focus="onUpdate"
-                            @dblclick="onUpdate"
-                            @change="onUpdate"
-                            @blur="onUpdate"
-                        />
+                        <ifields :account="account" :type="CVV_TYPE" :issuer="issuer" :options="ifieldCvvOptions"
+                            ref="cvvIfield" @load="onLoad" @submit="onSubmit" @token="onCvvToken" @error="onError"
+                            @keypress="onUpdate" @click="onUpdate" @input="onUpdate" @focus="onUpdate" @dblclick="onUpdate"
+                            @change="onUpdate" @blur="onUpdate" class="ifields" />
                     </b-field>
-                        <button @click="focus(CVV_TYPE)">Focus</button>
-                        <button @click="clear(CVV_TYPE)">Clear</button>
-                        <button @click="submit(CVV_TYPE)">Submit</button>
-                    <submit :amount="amount" :doSubmit="doSubmit" :cardData="cardData" :valid="ready" />
+                    <button @click="focus(CVV_TYPE)">Focus</button>
+                    <button @click="clear(CVV_TYPE)">Clear</button>
+                    <button @click="submit(CVV_TYPE)">Submit</button>
+                    <submit :amount="amount" :doSubmit="doSubmit" :cardData="cardData" :valid="ready"
+                        :verify3DS="verify3DS" />
                 </section>
                 <section class="box result-box">
                     <b-field label="Card Token">
-                        <p class="token-field" id="card-token">{{this.cardData.cardToken}}</p>
+                        <p class="token-field" id="card-token">{{ this.cardData.cardToken }}</p>
                     </b-field>
                     <b-field label="CVV Token">
-                        <p class="token-field" id="cvv-token">{{this.cardData.cvvToken}}</p>
+                        <p class="token-field" id="cvv-token">{{ this.cardData.cvvToken }}</p>
+                    </b-field>
+                    <b-field label="Gateway 3DS Response">
+                        <p class="token-field" >{{ this.gateway3dsResponse }}</p>
                     </b-field>
                 </section>
             </div>
@@ -110,7 +106,7 @@
 </template>
 
 <script>
-import ifields, { CARD_TYPE, CVV_TYPE } from "vue-cardknox-ifields";
+import ifields, { CARD_TYPE, CVV_TYPE, THREEDS_ENVIRONMENT } from "vue-cardknox-ifields";
 import submit from "./components/submit";
 import "buefy/dist/buefy.css";
 
@@ -120,7 +116,7 @@ export default {
         ifields,
         submit
     },
-    data: function() {
+    data: function () {
         return {
             account: {
                 xKey: "",
@@ -131,6 +127,7 @@ export default {
                 enableLogging: false,
                 autoFormat: true,
                 autoFormatSeparator: " ",
+                threeDS: this.threeDS,
                 placeholder: "Card Number",
                 iFieldstyle: {
                     width: "365px",
@@ -172,15 +169,23 @@ export default {
                 }
             },
             issuer: "",
-            amount: 2.36,
+            amount: "2.36",
             cardData: {
                 month: new Date().getMonth() + 1,
                 year: new Date().getFullYear(),
                 cardToken: "",
                 cvvToken: "",
-                name: ""
+                firstName: "John",
+                lastName: "Doe",
+                address: "123 Somewhere",
+                city: "Anywhere",
+                state: "NY",
+                zip: "98765",
+                mobile: "1234567890",
+                email: "test@test.com"
             },
-            doSubmit: false
+            doSubmit: false,
+            gateway3dsResponse: ""
         };
     },
     created() {
@@ -193,12 +198,9 @@ export default {
         },
         threeDS() {
             return {
-                enable3DS: false,
-                waitForResponse: false,
-                waitForResponseTimeout: undefined,
-                amount: this.amount,
-                month: this.cardData.month,
-                year: this.cardData.year
+                enable3DS: true,
+                environment: THREEDS_ENVIRONMENT.Staging,
+                handle3DSResults: this.handle3DSResults
             };
         },
         ready() {
@@ -231,20 +233,20 @@ export default {
         onError({ data }) {
             console.error("IFrame errored", data);
         },
-        focus(type){
+        focus(type) {
             const ref = this.getRefFromType(type);
             ref.focusIfield();
         },
-        clear(type){
+        clear(type) {
             const ref = this.getRefFromType(type);
             ref.clearIfield();
             this.cardData[type + "Token"] = "";
         },
-        submit(type){
+        submit(type) {
             const ref = this.getRefFromType(type);
             ref.getToken();
         },
-        getRefFromType(type){
+        getRefFromType(type) {
             switch (type) {
                 case CARD_TYPE:
                     return this.$refs.cardIfield;
@@ -252,6 +254,33 @@ export default {
                     return this.$refs.cvvIfield;
                 default:
                     throw Error('unknown type');
+            }
+        },
+        verify3DS(verifyData) {
+            window.ck3DS.verifyTrans(verifyData);
+        },
+        async handle3DSResults(actionCode, xCavv, xEciFlag, xRefNum, xAuthenticateStatus, xSignatureVerification, error) {
+            try {
+                console.log('handle3DSResults')
+                const postData = {
+                    xKey: "",
+                    xSoftwareName: "Test-Vue-iFields",
+                    xSoftwareVersion: "1.0",
+                    xVersion: "5.0.0",
+                    x3dsError: error,
+                    xRefNum: xRefNum,
+                    xCavv: xCavv,
+                    xEci: xEciFlag,
+                    x3dsAuthenticationStatus: xAuthenticateStatus,
+                    x3dsSignatureVerificationStatus: xSignatureVerification,
+                    x3dsActionCode: actionCode,
+                };
+                console.log(postData);
+                const response = await fetch('/api/verifyjson', { method: 'POST', body: JSON.stringify(postData), headers: {'Content-Type': 'application/json'} });
+                this.gateway3dsResponse = await response.json();
+            } catch (error) {
+                console.error(error);
+                this.gateway3dsResponse = error;
             }
         }
     }
@@ -262,38 +291,54 @@ export default {
 html {
     background-color: papayawhip;
 }
+
 #app {
     font-family: Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 .main {
     width: 65%;
     margin: 5% 10%;
 }
+
+/* fix iframe styling set by buefy */
 iframe {
+    height: inherit;
+}
+
+.ifields {
     height: 40px;
     width: 100%;
     max-width: 100%;
 }
+
 .card-box {
     max-width: 450px;
     min-width: 406px;
     width: 425px;
     float: left;
 }
-.result-box{
+
+.result-box {
     max-width: 450px;
     min-width: 406px;
     width: 425px;
     float: right;
 }
+
 #total {
     color: #00103a;
     font-size: 32px;
     font-weight: bold;
 }
-.token-field{
+
+.token-field {
     word-wrap: break-word;
+}
+
+.smallWidth {
+    max-width: 23%;
 }
 </style>
