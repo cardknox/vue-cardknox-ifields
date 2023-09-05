@@ -14,7 +14,11 @@ import {
 */
 export function _onMessage(e) {
     var data = e.data;
-    if (e.source !== this.$refs.iFrameRef.contentWindow) return;
+    if (!this.iFrameRef) {
+        this.log("Unable to handle message: " + data.action);
+        return;
+    }
+    if (e.source !== this.iFrameRef.contentWindow) return;
     switch (data.action) {
         case LOADED:
             this.log("Message received: ifield loaded");
@@ -59,7 +63,7 @@ export function _onLoad() {
     if (this.options.autoSubmit)
         this.enableAutoSubmit(this.options.autoSubmitFormId || "");
     if (this.options.iFieldstyle)
-        this.setStyle(this.options.iFieldstyle);
+        this.setStyle(Object.assign({}, this.options.iFieldstyle));
     this.$emit('load');
 }
 /**
