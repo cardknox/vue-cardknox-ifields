@@ -14,7 +14,7 @@ npm run build
 ```
 
 3. Add your ifields key to `src/App.vue`
-
+4. Add your gateway key to src/components/submit.vue
 ### Compiles and hot-reloads for development
 ```
 npm start
