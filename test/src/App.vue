@@ -123,15 +123,11 @@ function onSubmit() {
 }
 function onCardToken({ data }) {
   console.log("IFrame card token received", data);
-  cardData.value = Object.assign({}, cardData.value, {
-    cardToken: data.xToken
-  });
+  cardData.value.cardToken = data.xToken;
 }
 function onCvvToken({ data }) {
   console.log("IFrame cvv token received", data);
-  cardData.value = Object.assign({}, cardData.value, {
-    cvvToken: data.xToken
-  });
+  cardData.value.cvvToken = data.xToken;
 }
 function onError({ data }) {
   console.error("IFrame errored", data);
@@ -282,7 +278,8 @@ function verify3DS(verifyData) {
               <button @click="clear(CVV_TYPE)">Clear</button>
               <button @click="submit(CVV_TYPE)">Submit</button>
               <div class="button-spaced">
-                <o-button rounded :disabled="!readyToSubmitToGateway" @click="submitToGateway">Submit To Gateway</o-button>
+                <o-button rounded :disabled="!readyToSubmitToGateway" @click="submitToGateway">Submit To
+                  Gateway</o-button>
               </div>
             </section>
           </div>
@@ -353,7 +350,8 @@ function verify3DS(verifyData) {
 .smallWidth {
   max-width: 23%;
 }
-.button-spaced{
+
+.button-spaced {
   padding: 10px 0;
 }
 </style>
