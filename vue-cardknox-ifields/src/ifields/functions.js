@@ -10,8 +10,12 @@ export function postMessage(data) {
         this.ping();
         return;
     }
-    const target = isAccessible(this.$refs.iFrameRef.contentWindow) ? location.origin : IFIELD_ORIGIN;
-    this.$refs.iFrameRef.contentWindow.postMessage(data, target);
+    try {
+        const target = isAccessible(this.iFrameRef.contentWindow) ? location.origin : IFIELD_ORIGIN;
+        this.iFrameRef.contentWindow.postMessage(data, target);
+    } catch (error) {
+        this.log(error);
+    }
 }
 
 function isAccessible(otherWindow) {

@@ -1,6 +1,6 @@
 {
   "name": "@cardknox/vue-cardknox-ifields",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "A Vue component for Cardknox iFields",
   "main": "dist/vue-cardknox-ifields.umd.js",
   "module": "dist/vue-cardknox-ifields.esm.js",
@@ -10,10 +10,10 @@
   },
   "scripts": {
     "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
-    "build:umd": "rollup --config rollup.config.js --format umd --file dist/vue-cardknox-ifields.umd.js",
-    "build:es": "rollup --config rollup.config.js --format es --file dist/vue-cardknox-ifields.esm.js",
-    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/vue-cardknox-ifields.min.js",
-    "start": "rollup --config rollup.config.js --format es --file dist/vue-cardknox-ifields.esm.js --watch"
+    "build:umd": "rollup --config rollup.config.mjs --format umd --file dist/vue-cardknox-ifields.umd.js",
+    "build:es": "rollup --config rollup.config.mjs --format es --file dist/vue-cardknox-ifields.esm.js",
+    "build:unpkg": "rollup --config rollup.config.mjs --format iife --file dist/vue-cardknox-ifields.min.js",
+    "start": "rollup --config rollup.config.mjs --format es --file dist/vue-cardknox-ifields.esm.js --watch"
   },
   "keywords": [
     "vue",
@@ -33,11 +33,11 @@
   },
   "license": "GPL-3.0",
   "devDependencies": {
-    "@rollup/plugin-buble": "^0.21.3",
-    "@rollup/plugin-commonjs": "^11.1.0",
-    "rollup": "^2.79.1",
-    "rollup-plugin-vue": "^5.1.9",
-    "vue": "^2.7.10",
-    "vue-template-compiler": "^2.7.10"
+    "@rollup/plugin-buble": "^1.0.2",
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "rollup": "^3.28.1",
+    "rollup-plugin-vue": "^6.0.0",
+    "vue": "^3.3.4",
+    "vue-template-compiler": "^2.7.14"
   }
 }

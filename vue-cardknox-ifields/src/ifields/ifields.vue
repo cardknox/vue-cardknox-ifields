@@ -88,6 +88,7 @@ export default {
   mounted: function () {
     this.validateProps();
     window.addEventListener("message", this.onMessage);
+    this.iFrameRef = this.$refs.iFrameRef;
     this.ping();
   },
   destroyed: function () {
@@ -147,6 +148,4 @@ export default {
     }
   }
 };
-
-export { CARD_TYPE, ACH_TYPE, CVV_TYPE } from "./constants";
 </script>

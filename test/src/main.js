@@ -1,10 +1,10 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
+import Oruga from '@oruga-ui/oruga-next';
 import App from './App.vue'
-import Buefy from 'buefy'
+import '@oruga-ui/oruga-next/dist/oruga-full.css';
+import 'bulma/css/bulma.css'
 
-Vue.config.productionTip = false
+const app = createApp(App)
 
-Vue.use(Buefy);
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+app.use(Oruga);
+app.mount('#app')
