@@ -1,6 +1,6 @@
 {
   "name": "@cardknox/vue-cardknox-ifields",
-  "version": "2.0.0",
+  "version": "2.2.55",
   "description": "A Vue component for Cardknox iFields",
   "main": "dist/vue-cardknox-ifields.umd.js",
   "module": "dist/vue-cardknox-ifields.esm.js",
