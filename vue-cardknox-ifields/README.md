@@ -1,6 +1,6 @@
 # vue-cardknox-ifields
 
-## A Vue component for Cardknox iFields
+## A Vue 3 component for Cardknox iFields
 
 ## Cardknox
 
@@ -13,6 +13,8 @@ Cardknox is a developer-friendly payment gateway integration provider for in-sto
 A sandbox or live account is required to use this component
 
 ---
+
+_This component uses Vue 3. For Vue 2, use version **[1.2.54](https://www.npmjs.com/package/@cardknox/vue-cardknox-ifields/v/1.2.54)**_
 
 ## Usage
 
