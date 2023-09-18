@@ -1,5 +1,8 @@
 # Changelog
 
+## changelog for version 1.2.54
+- Added support for 3D Secure
+
 ## changelog for version 1.0.2
 
 ### Fix
