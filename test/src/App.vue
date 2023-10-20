@@ -36,7 +36,6 @@ const ifieldCardOptions = ref({
   enableLogging: true,
   autoFormat: true,
   autoFormatSeparator: " ",
-  threeDS: threeDS.value,
   placeholder: "Card Number",
   autoSubmit: false,
   iFieldstyle: {
