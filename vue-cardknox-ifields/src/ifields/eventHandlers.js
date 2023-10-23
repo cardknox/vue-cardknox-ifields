@@ -39,7 +39,7 @@ export function _onMessage(e) {
         default:
             break;
     }
-    if (this.threeDS.enable3DS && data.eci && data.eci.length && this.type === CARD_TYPE) {
+    if (this.threeDS && this.threeDS.enable3DS && data.eci && data.eci.length && this.type === CARD_TYPE) {
         this.log("Message received: eci");
         this.postMessage(data);
     }
@@ -49,7 +49,7 @@ export function _onLoad() {
     const newAccount = this.transformAccountData(this.account);
     this.setAccount(newAccount);
     if (this.type === CARD_TYPE)
-        if (this.threeDS.enable3DS && !!this.threeDS.environment)
+        if (this.threeDS && this.threeDS.enable3DS && !!this.threeDS.environment)
             this.enable3DS(this.threeDS.environment, this.threeDS.handle3DSResults);
         else
             this.disable3DS();
