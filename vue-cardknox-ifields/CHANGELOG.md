@@ -1,5 +1,8 @@
 # Changelog
 
+## changelog for version 2.2.57
+- Fixed 3DS issue
+
 ## changelog for version 2.2.55
 - Upgrade to Vue3
 
