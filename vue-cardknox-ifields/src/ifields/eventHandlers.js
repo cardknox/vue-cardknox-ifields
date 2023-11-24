@@ -39,7 +39,7 @@ export function _onMessage(e) {
         default:
             break;
     }
-    if (this.threeDS.enable3DS && data.eci && data.eci.length && this.type === CARD_TYPE) {
+    if (this.threeDS && this.threeDS.enable3DS && data.eci && data.eci.length && this.type === CARD_TYPE) {
         this.log("Message received: eci");
         this.postMessage(data);
     }
@@ -48,9 +48,11 @@ export function _onLoad() {
     this.iFrameLoaded = true;
     const newAccount = this.transformAccountData(this.account);
     this.setAccount(newAccount);
-    if (this.type === CARD_TYPE && this.threeDS.enable3DS && !!this.threeDS.environment) {
-        this.enable3DS(this.threeDS.environment, this.threeDS.handle3DSResults);
-    }
+    if (this.type === CARD_TYPE)
+        if (this.threeDS && this.threeDS.enable3DS && !!this.threeDS.environment)
+            this.enable3DS(this.threeDS.environment, this.threeDS.handle3DSResults);
+        else
+            this.disable3DS();
     this.init();
     if (this.type === CVV_TYPE && this.issuer)
         this.updateIssuer(this.issuer);
