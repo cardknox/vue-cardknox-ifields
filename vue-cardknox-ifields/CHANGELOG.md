@@ -1,6 +1,6 @@
 # Changelog
 
-## changelog for version 2.2.67
+## changelog for version 2.2.69
 
 - Changed license to MIT
 
