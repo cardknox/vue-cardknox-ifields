@@ -21,7 +21,6 @@ export const ENABLE_LOGGING = 'enableLogging';
 export const ENABLE_AUTO_SUBMIT = 'enableAutoSubmit';
 export const ENABLE3DS = 'enable3DS';
 export const DISABLE3DS = 'disable3DS';
-export const UPDATE3DS = 'update3DS';
 export const AUTO_FORMAT_DEFAULT_SEPARATOR = " ";
 export const IFIELDS_VERSION = '2.15.2302.0801';
 export const PLUGIN_NAME = "vue-cardknox-ifields";
