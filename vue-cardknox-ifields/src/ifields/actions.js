@@ -12,7 +12,6 @@ import {
   ENABLE_AUTO_SUBMIT,
   ENABLE3DS,
   DISABLE3DS,
-  UPDATE3DS,
   UPDATE_ISSUER
 } from "./constants";
 
@@ -115,22 +114,6 @@ export function verify3DS(verifyData) {
     ck3DS.verifyTrans(verifyData);
   else
     this.log('verify3DS called without using enable3DS first to attach a handler!')
-}
-/**
- *
- * @param {string} fieldName - The field to update
- * @param {string} value
- */
-export function update3DS(fieldName, value) {
-  const message = {
-    action: UPDATE3DS,
-    data: {
-      fieldName,
-      value
-    }
-  };
-  this.logAction(UPDATE3DS);
-  this.postMessage(message);
 }
 /**
  *
