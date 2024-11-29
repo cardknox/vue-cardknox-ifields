@@ -90,14 +90,13 @@ export function _onToken({ data }) {
 export function _onUpdate({ data }) {
     const shouldGetToken = data.isValid
         && data.length !== this.ifieldDataCache.length
-        && !this.tokenLoading
         && this.options.autoSubmit;
     if (shouldGetToken) {
+        this.ifieldDataCache = {
+            length: data.length
+        };
         this.getToken();
     }
-    this.ifieldDataCache = {
-        length: data.length
-    };
     switch (data.event) {
         case 'input':
             this.$emit('input', { data });
