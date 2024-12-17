@@ -1,5 +1,9 @@
 # Changelog
 
+## changelog for version 2.2.71
+
+- Fixed timing issue with auto-submit
+
 ## changelog for version 2.2.69
 
 - Changed license to MIT
