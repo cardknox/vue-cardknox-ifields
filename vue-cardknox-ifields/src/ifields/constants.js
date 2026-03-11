@@ -21,11 +21,11 @@ export const ENABLE_LOGGING = 'enableLogging';
 export const ENABLE_AUTO_SUBMIT = 'enableAutoSubmit';
 export const ENABLE3DS = 'enable3DS';
 export const DISABLE3DS = 'disable3DS';
-export const AUTO_FORMAT_DEFAULT_SEPARATOR = ' ';
+export const AUTO_FORMAT_DEFAULT_SEPARATOR = " ";
 export const IFIELDS_VERSION = '3.4.2602.2001';
-export const PLUGIN_NAME = 'vue-cardknox-ifields';
-export const IFIELD_ORIGIN = 'https://cdn.cardknox.com';
+export const PLUGIN_NAME = "vue-cardknox-ifields";
+export const IFIELD_ORIGIN = "https://cdn.cardknox.com";
 export const THREEDS_ENVIRONMENT = {
   Production: 'production',
-  Staging: 'staging',
+  Staging: 'staging'
 };
