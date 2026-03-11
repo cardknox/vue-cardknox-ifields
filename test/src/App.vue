@@ -113,7 +113,7 @@ function onLoad() {
   console.log("Iframe loaded");
 }
 function onUpdate({ data }) {
-  if (data.issuer)
+  if (data && data.issuer)
     issuer.value = data.issuer;
 }
 function onSubmit() {
