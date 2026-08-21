@@ -1,0 +1,34 @@
+# Mergify configuration - https://docs.mergify.com/configuration/file-format/
+#
+# Merge protections report a `Mergify Merge Protections` check run on every pull
+# request. That check only *blocks* a merge once Merge Protections is enabled for
+# this repo in the Mergify dashboard AND the check is marked required in the
+# branch protection rule / ruleset for master.
+#
+# The names below are the exact check-run names GitHub reports:
+#   "Aikido Security: check code"     - aikido-pr-checks app
+#   "Safe Chain gate, build and test" - job in .github/workflows/safe-chain.yml
+# Renaming that job, or the Aikido check, breaks these conditions - a name that
+# never appears stays pending, which fails the protection rather than skipping it.
+# If another app ever publishes a check with the same name, disambiguate with the
+# qualified form, e.g. "@github-actions/Safe Chain gate, build and test".
+
+merge_protections:
+  - name: Aikido security scan must pass
+    description: >-
+      Aikido scans each pull request for malware and code issues. Merging past a
+      failed - or still running - scan defeats the point of scanning.
+    if:
+      - base = master
+    success_conditions:
+      - "check-success = Aikido Security: check code"
+
+  - name: Safe Chain CI must pass
+    description: >-
+      The Safe Chain workflow routes dependency installs through Aikido Safe Chain
+      to block known-malicious packages, then builds the package and smoke-tests
+      the test app against the build.
+    if:
+      - base = master
+    success_conditions:
+      - "check-success = Safe Chain gate, build and test"
