@@ -1,8 +1,12 @@
 name: Safe Chain
 
-# Supply-chain gate for the vue-cardknox-ifields package: every dependency install
-# in this job runs through Aikido Safe Chain, which blocks known-malicious packages
-# before their install scripts can execute.
+# Supply-chain gate for both packages in this repo - vue-cardknox-ifields and test -
+# so every package-lock.json in the tree is covered. Aikido Safe Chain installs PATH
+# shims once per job, so every npm invocation below is intercepted and known-malicious
+# packages are blocked before their install scripts can execute.
+#
+# Both installs run before any build: a poisoned lockfile in either package should be
+# caught by the gate rather than by a build step that happens to run first.
 on:
   pull_request:
     branches: [master]
@@ -77,10 +81,17 @@ jobs:
             *) echo "::error::Safe Chain is not intercepting npm - refusing to install dependencies."; exit 1 ;;
           esac
 
-      - name: Install dependencies
+      - name: Install dependencies (vue-cardknox-ifields)
         run: npm ci
 
-      - name: Build
+      # `npm ci` here only links vue-cardknox-ifields (file: dependency, "link": true
+      # in the lockfile), so it does not need the library built yet - which lets both
+      # lockfiles clear the gate before any build runs.
+      - name: Install dependencies (test app)
+        working-directory: test
+        run: npm ci
+
+      - name: Build vue-cardknox-ifields
         run: npm run build
 
       # `npm run build` backgrounds two of its three sub-builds with `&`, so its
@@ -101,15 +112,18 @@ jobs:
           done
 
       # No-op until the package gains a test script.
-      - name: Test
+      - name: Test vue-cardknox-ifields
         run: npm test --if-present
 
-      # Smoke test: the test app consumes the built package via file:../vue-cardknox-ifields,
+      # Smoke test: test consumes the built library via file:../vue-cardknox-ifields,
       # so building it proves the published entry points actually resolve and bundle.
-      - name: Install test app dependencies
-        working-directory: test
-        run: npm ci
-
+      # This is why the builds stay sequential in one job rather than a matrix - the
+      # test build needs dist/ from the step above.
       - name: Build test app
         working-directory: test
         run: npm run build
+
+      # No-op until the test app gains a test script.
+      - name: Test test app
+        working-directory: test
+        run: npm test --if-present
